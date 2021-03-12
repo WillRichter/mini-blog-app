@@ -10,7 +10,7 @@ const bcrypt = require("bcrypt");
 const saltRounds = 10;
 
 
-// Set up postgreSQL database and create new client
+//Set up postgreSQL database and create new client
 const client = new Client({
     user: process.env.USER,
     password: process.env.PASSWORD,
@@ -19,6 +19,7 @@ const client = new Client({
     database: process.env.DATABASE,
     ssl: { rejectUnauthorized: false }
 });
+
 
 client.connect();
 
@@ -41,7 +42,7 @@ app.use(session({
 app.use(passport.initialize());
 app.use(passport.session());
 
-passport.use(new LocalStrategy((username, pass, done) => {
+passport.use(new LocalStrategy(function (username, pass, done) {
     client.query("SELECT * FROM users WHERE username=$1", [username], (err, result) => {
         if(result.rows.length > 0){
             const user = result.rows[0];
@@ -58,11 +59,11 @@ passport.use(new LocalStrategy((username, pass, done) => {
     });
 }));
 
-passport.serializeUser((user, done) => {
+passport.serializeUser(function(user, done) {
     done(null, user);
   });
   
-passport.deserializeUser((id, done) => {
+passport.deserializeUser(function(id, done) {
     done(null, id);
 });
 
@@ -76,6 +77,7 @@ app.get("/", (req,res) => {
                 console.log(err);
                 res.redirect("/compose");
             } else {
+                console.log(results);
                 res.render("index", {isLoggedIn: true, posts:results, req:req});
             }
         });
@@ -133,9 +135,7 @@ app.post("/register", (req,res) => {
                                 console.log(err);
                                 res.redirect("/register");
                             } else {
-                                passport.authenticate("local")( req, res, () => {
-                                    res.redirect("/login");
-                                });
+                                res.redirect("/login");
                             }
                         });
                     }
