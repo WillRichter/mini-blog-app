@@ -1,0 +1,50 @@
+<%- include('partials/header'); -%>
+
+        <% if(posts.rows < 1){ %>
+
+          <h1 class="center">No posts yet :(</h1>
+
+          <%} else { %>
+
+            <% posts.rows.forEach(function(post){ %>
+
+              <div class="card">
+
+                <div class="card-header">
+                  <div class="row">
+                    <div class="col-lg">
+                      <%=post.title%>
+                    </div>
+                    <div class="col-lg ">
+                      <i class="far fa-thumbs-up thumbs-up inline"><%=post.totallikes%></i>
+                    </div>
+                  </div>
+                </div>
+                <div class="card-body">
+                  <p class="card-text"><%=post.content%></p>
+                </div>
+
+                <div class="card-footer">
+                  <div class="row">
+                    <div class="col-lg">
+                      Created by <%=post.username%>
+                    </div>
+                    <div class="col-lg">
+                      <a href="/blog/<%=post.post_id%>" class="btn btn-dark btn-sm card-button">Read More</a>
+                    </div>
+                  </div>
+                </div>
+                  
+              </div>
+
+            <% }); %> 
+
+        <% } %>
+
+
+        
+
+
+
+
+<%- include('partials/footer'); -%>

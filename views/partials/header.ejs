@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Home Page</title>
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<link rel="preconnect" href="https://fonts.gstatic.com">
+<link href="https://fonts.googleapis.com/css2?family=Montserrat&display=swap" rel="stylesheet"> 
+<script src="https://kit.fontawesome.com/fae11ebf9d.js" crossorigin="anonymous"></script>
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css" integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
+<link rel="stylesheet" href="/css/styles.css">
+
+
+</head>
+<body>
+
+    <nav class="navbar sticky-top navbar-expand-lg navbar-dark">
+        <a class="navbar-brand brand-size" href="/">Bloggit</a>
+        <% if(isLoggedIn){ %>
+          <a class="nav-item nav-link active">You are signed in as <%=req.user.username%></a>
+        <% } else { %>
+            <a class="nav-item nav-link active"></a>
+        <% } %>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavAltMarkup">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse justify-content-end" id="navbarNavAltMarkup">
+          <div class="navbar-nav">
+            <% if(isLoggedIn){ %>
+              <a class="nav-item nav-link active" href="/">Home <span class="sr-only">(current)</span></a>
+              <a class="nav-item nav-link active" href="/compose">Compose</a>
+              <a class="nav-item nav-link active" href="/logout">Log out</a>
+            <% } else { %>
+              <a class="nav-item nav-link active" href="/login">Log in</a>
+              <a class="nav-item nav-link active" href="/register">Register</a>
+            <% } %>
+            
+          </div>
+        </div>
+      </nav>
+
+    <div class="container">

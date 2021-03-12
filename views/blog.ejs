@@ -1,0 +1,76 @@
+<%- include('partials/header'); -%>
+
+        <div class="card">
+                <div class="card-header">
+                  <div class="row">
+                    <div class="col-lg">
+                      <%=post.title%>
+                    </div>
+                    <div class="col-lg ">
+                      <i class="home-likes inline"></i>
+                      <i class="far fa-thumbs-up thumbs-up inline"><%=post.totallikes%></i>
+                    </div>
+                  </div>
+                </div>
+                <div class="card-body">
+                  <p class="card-text"><%=post.content%></p>
+                </div>
+
+                <div class="card-footer">
+                  <div class="row">
+                    <div class="col-lg">
+                      Created by <%=post.username%>
+                    </div>
+                    <div class="col-lg">
+                        <% if(req.user.username === post.username){ %>
+                                <form action="/delete/<%=post.post_id%>" method="POST">
+                                        <button type="submit" class="btn btn-dark btn-sm card-button">Delete Post</button>
+                                </form>
+                        <% } %>
+                    </div>
+                  </div>
+                </div>
+                  
+              </div>
+
+        <div>   
+                <% if(!isLiked){ %>
+                        <form class="center" action="/like/<%=post.post_id%>" method="POST">
+                                <button type="Submit">like</button>
+                        </form>
+                <% } else {%>
+                        <form class="center" action="/removelike/<%=post.post_id%>" method="POST">
+                                <button type="Submit">remove like</button>
+                        </form>
+                <% } %>
+                
+        </div>
+        
+
+        <div class="comments">
+
+                <% if(comments){ %>
+                        <% comments.forEach( function (comment) { %>
+                                <div class="card">
+                                        <div class="card-header"><%=comment.username%> says:</div>
+                                        <div class="card-body">
+                                            <p><%=comment.comment%></p>
+                                        </div>
+                                </div>
+                        <% }); %> 
+                <% } %>
+
+
+                <div class="comment-form">
+                        <form class="center" action="/comment" method="POST">
+                                <textarea type="text" name="comment_text" placeholder="Leave a comment...."></textarea>
+                                <button type="Submit" name="post_id" value="<%=post.post_id%>">Submit</button>
+                        </form> 
+                </div>
+
+        </div>
+        
+        
+
+
+<%- include('partials/footer'); -%>

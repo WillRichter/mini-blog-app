@@ -1,0 +1,140 @@
+/* Remove margin and padding from site and set font style */
+body{
+    margin: 0;
+    padding: 0;
+    font-family: 'Montserrat', sans-serif;
+    color: white;
+    padding-bottom: 120px;
+    background-color: #78c4d4;
+    font-weight: 300;
+}
+
+/* Container padding */
+.container {
+    padding-top: 25px;
+}
+
+/* Styling for Navbar */
+.navbar{
+    background-color: #78c4d4;
+    color: white;
+    padding: 1%;
+    font-size: 2em;
+}
+
+
+.brand-size{
+    font-size: 2.5rem;
+}
+
+/* Remove top margin for headings */
+h1, h2, h3, h4, h5, h6 {
+    margin-top: 0;
+}
+
+/* Styling for footer */
+#footer{
+    text-align: center;
+    font-size: 2rem;
+    color: white;
+    text-align: center;
+    font-size: 2rem;
+    color: white;
+}
+
+
+footer{
+    position: absolute;
+}
+
+/* Form Styling  */
+.form-container{
+    padding: 20% 0 0 0;
+}
+
+form input, form textarea {
+    padding: 0.5%;
+    border: 1px solid rgba(252, 252, 252, 0.4);
+    background-color: rgba(252, 252, 252, 0.2);
+    display: block;
+    width: 50%;
+    margin: 0 auto 2% ;
+    text-align: center;
+    color: white;
+    font-size: 2rem;
+    border-radius: 5px;
+}
+
+form button {
+    padding: 0.5%;
+    appearance: none;
+    display: block;
+    width: 50%;
+    margin: 0 auto 2% ;
+    text-align: center;
+    background-color: white;
+    color: #78c4d4;
+    font-size: 2rem;
+    border-radius: 5px;
+}
+
+
+/* Styling for Blog Post Cards */
+.card {
+    color: #28527a;
+    font-size: 1.5rem;
+    margin-bottom: 50px;
+    width: 100%;
+    border: 1px solid #28527a;
+}
+
+.card-header{
+    font-size: 2rem;
+}
+
+.card-text{
+    padding: 1% 0 1%;
+}
+
+.card-button{
+    float: right;
+    background-color: #78c4d4;
+    border: 1px solid #28527a;
+    color: white;
+}
+
+.home-likes{
+    float: right;
+}
+
+.thumbs-up{
+    margin: 9px 5px 0 0;
+    float: right;
+    color: #78c4d4;
+}
+
+.inline{
+    display: inline-block;
+}
+
+/* .card:hover {
+    box-shadow: 0 0 10px #000000;
+} */
+
+/* Center Items */
+.center{
+    text-align: center;
+    margin-bottom: 2%;
+}
+
+
+@media screen and (max-width: 600px) {
+    *, body, .brand-size, #footer, form input, form textarea, form button, .card{
+      font-size: 1rem;
+    }
+
+    .brand-size{
+        font-size: 1.5rem;
+    }
+
+  }
