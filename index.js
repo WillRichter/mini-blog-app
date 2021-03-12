@@ -3,6 +3,7 @@ const express = require("express");
 const bodyParser = require("body-parser");
 const ejs = require("ejs");
 const session = require("express-session");
+const MemoryStore = require("memorystore")(session);
 const passport = require("passport");
 const LocalStrategy = require("passport-local").Strategy;
 const {Client} = require("pg");
@@ -34,10 +35,13 @@ app.set("view engine", "ejs");
 
 
 app.use(session({
+    cookie: {maxAge:86400000},
     secret: process.env.SESSION_KEY,
     resave: false,
-    saveUninitialized: false
+    saveUninitialized: false,
+    store : new MemoryStore({checkPeriod:86400000})
 }));
+
 
 app.use(passport.initialize());
 app.use(passport.session());
