@@ -11,12 +11,10 @@ const saltRounds = 10;
 
 
 //Set up postgreSQL database and create new client
+const connectionString = process.env.DATABASE_URL;
+
 const client = new Pool({
-    user: process.env.USER,
-    password: process.env.PASSWORD,
-    host: process.env.HOST,
-    port: process.env.PORT,
-    database: process.env.DATABASE,
+    connectionString,
     ssl: { rejectUnauthorized: false }
 });
 
