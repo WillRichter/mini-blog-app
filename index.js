@@ -3,16 +3,15 @@ const express = require("express");
 const bodyParser = require("body-parser");
 const ejs = require("ejs");
 const session = require("express-session");
-//const MemoryStore = require("memorystore")(session);
 const passport = require("passport");
 const LocalStrategy = require("passport-local").Strategy;
-const {Client} = require("pg");
+const {Pool} = require("pg");
 const bcrypt = require("bcrypt");
 const saltRounds = 10;
 
 
 //Set up postgreSQL database and create new client
-const client = new Client({
+const client = new Pool({
     user: process.env.USER,
     password: process.env.PASSWORD,
     host: process.env.HOST,
@@ -22,7 +21,13 @@ const client = new Client({
 });
 
 
-client.connect();
+client.connect(err => {
+    if(err){
+        console.log("Connection err: " + err.stack);
+    } else {
+        console.log("Connected");
+    }
+});
 
 // set up app withexpress
 app = express();
@@ -38,11 +43,11 @@ app.use(session({
     store: new (require('connect-pg-simple')(session))({
         pool: client
     }),
-    // cookie: {maxAge:86400000},
+    cookie: {maxAge:86400000},
     secret: process.env.SESSION_KEY,
     resave: false,
     saveUninitialized: false,
-    // proxy: true
+    proxy: true
 }));
 
 
@@ -84,7 +89,6 @@ app.get("/", (req,res) => {
                 console.log(err);
                 res.redirect("/login");
             } else {
-                console.log(results);
                 res.render("index", {isLoggedIn: true, posts:results, req:req});
             }
         });
@@ -307,6 +311,6 @@ if(port == null || port ==""){
 }
 
 
-app.listen(port, () => {
+app.listen(3000, () => {
     console.log("Server has started successfully.");
 });
