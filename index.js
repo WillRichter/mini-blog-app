@@ -134,7 +134,7 @@ app.post("/register", (req,res) => {
                 console.log(err);
                 res.redirect("/register");
             } 
-            if (result.rows.length > 0){
+            if (typeof result.rows == "undefined" || result.rows.length > 0){
                 res.redirect("/register");
             } else {
                 bcrypt.hash(pass, saltRounds, (err,hash) => {
