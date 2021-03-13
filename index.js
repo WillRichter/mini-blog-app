@@ -104,7 +104,7 @@ app.get("/login", (req,res) => {
 });
 
 app.post("/login", passport.authenticate("local"), (req, res) => {
-    res.end();
+    res.status(200).send();
     res.redirect("/");
 });
 
