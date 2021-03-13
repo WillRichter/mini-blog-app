@@ -56,7 +56,8 @@ app.use(passport.session());
 
 passport.use(new LocalStrategy(function (username, pass, done) {
     client.query("SELECT * FROM users WHERE username=$1", [username], (err, result) => {
-        if(result.rows.length > 0){
+        console.log(result.rows);
+        if(typeof result.rows !== "undefined" || result.rows.length > 0){
             const user = result.rows[0];
             bcrypt.compare(pass, user.password, (err, res) => {
                 if(res){
