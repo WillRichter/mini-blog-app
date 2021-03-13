@@ -83,6 +83,7 @@ app.get("/", (req,res) => {
                 res.redirect("/compose");
             } else {
                 console.log(results);
+                res.end();
                 res.render("index", {isLoggedIn: true, posts:results, req:req});
             }
         });
@@ -103,6 +104,7 @@ app.get("/login", (req,res) => {
 });
 
 app.post("/login", passport.authenticate("local"), (req, res) => {
+    res.end();
     res.redirect("/");
 });
 
