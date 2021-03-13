@@ -79,6 +79,7 @@ app.get("/", (req,res) => {
             FROM posts INNER JOIN users ON users.user_id= posts.user_id ORDER BY posts.post_id DESC", (err, results) => {
             if(err){
                 console.log(err);
+                client.end();
                 res.redirect("/compose");
             } else {
                 console.log(results);
@@ -124,6 +125,7 @@ app.post("/register", (req,res) => {
         client.query("SELECT * FROM users WHERE username=$1", [user], (err,result) => {
             if(err){
                 console.log(err);
+                client.end();
                 res.redirect("/register");
             } 
             if (result.rows.length > 0){
@@ -137,8 +139,10 @@ app.post("/register", (req,res) => {
                         client.query("INSERT INTO users (username, password) VALUES ($1, $2)", [user, hash], (err,result) => {
                             if(err){
                                 console.log(err);
+                                client.end();
                                 res.redirect("/register");
                             } else {
+                                client.end();
                                 res.redirect("/login");
                             }
                         });
@@ -167,15 +171,18 @@ app.get("/blog/:id", (req,res) => {
                 INNER JOIN users ON users.user_id= posts.user_id WHERE post_id=$1", [id], (err, result) => {
             if(err){
                 console.log(err);
+                client.end();
                 res.redirect("/");
             } else {
                 client.query("SELECT username, comment FROM users INNER JOIN comments ON users.user_id=comments.user_id WHERE post_id=$1", [id], (err, results) => {
                     if(err){
                         console.log(err);
+                        client.end();
                         res.redirect("/blog/" +id);
                     } else {
                         client.query("SELECT * FROM likes WHERE post_id=$1", [id], (err, likeAmounts) => {
                             if(err){
+                                client.end();
                                 console.log(err);
                             } else {
                                 var isLiked = false;
@@ -188,6 +195,7 @@ app.get("/blog/:id", (req,res) => {
                                 if(indexReturned >= 0){
                                     isLiked = true;
                                 }
+                                client.end();
                                 res.render("blog", {post:result.rows[0], isLoggedIn:true, req:req, comments:results.rows, likes:likeAmounts, isLiked:isLiked});
                             }
                         });
@@ -208,8 +216,10 @@ app.post("/delete/:id", (req,res) => {
     client.query("DELETE FROM posts WHERE post_id=$1", [postId], (err, result) => {
         if(err){
             console.log(err);
+            client.end();
             res.redirect("/blog/" +postId);
         } else {
+            client.end();
             res.redirect("/");
         }
     })
@@ -232,9 +242,11 @@ app.post("/compose", (req, res) => {
         const content = req.body.content;
         client.query("INSERT INTO posts (title, content, user_id) VALUES ($1, $2, $3)", [title, content, req.user.user_id], (err, result) => {
             if(err){
+                client.end();
                 console.log(err);
                 res.redirect("/compose");
             } else {
+                client.end();
                 res.redirect("/");
             }
         });
@@ -252,8 +264,10 @@ app.post("/comment", (req, res) => {
         client.query("INSERT INTO comments (comment, user_id, post_id) VALUES ($1, $2, $3)", [comment, user_id, post_id], (err, results) => {
             if(err){
                 console.log(err);
+                client.end();
                 res.redirect("/");
             } else {
+                client.end();
                 res.redirect("/blog/" + post_id);
             }
         });
@@ -268,8 +282,10 @@ app.post("/like/:id", (req, res) => {
         client.query("INSERT INTO likes (user_id, post_id) VALUES ($1, $2)", [user_id, post_id], (err, result) => {
             if(err){
                 console.log(err);
+                client.end();
                 res.redirect("/blog/" + post_id);
             } else {
+                client.end();
                 res.redirect("/blog/" + post_id);
             }
         });
@@ -286,8 +302,10 @@ app.post("/removelike/:id", (req,res) => {
         client.query("DELETE FROM likes WHERE user_id=$1 AND post_id=$2", [user_id, post_id], (err, result) => {
             if(err){
                 console.log(err);
+                client.end();
                 res.redirect("/blog/" +post_id);
             } else {
+                client.end();
                 res.redirect("/blog/" +post_id);
             }
         });
