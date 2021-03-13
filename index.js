@@ -311,6 +311,6 @@ if(port == null || port ==""){
 }
 
 
-app.listen(3000, () => {
+app.listen(port, () => {
     console.log("Server has started successfully.");
 });
